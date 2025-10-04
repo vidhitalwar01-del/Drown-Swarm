@@ -17,29 +17,26 @@ RED = (200,50,50)
 
 # Clock
 clock = pygame.time.Clock()
-
-# Player 
+#Player
 class Player:
     def __init__(self):
-        self.size = 40
-        self.x = WIDTH // 2
-        self.y = HEIGHT - self.size - 10
-        self.speed = 5
-        self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
+        self.image = pygame.image.load("drone.png")  # load image
+        self.image = pygame.transform.scale(self.image, (PLAYER_SIZE, PLAYER_SIZE))  # resize
+        self.rect = self.image.get_rect(center=(WIDTH // 2, HEIGHT - PLAYER_SIZE))
 
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.rect.left > 0:
-            self.rect.x -= self.speed
+            self.rect.x -= PLAYER_SPEED
         if keys[pygame.K_RIGHT] and self.rect.right < WIDTH:
-            self.rect.x += self.speed
+            self.rect.x += PLAYER_SPEED
         if keys[pygame.K_UP] and self.rect.top > 0:
-            self.rect.y -= self.speed
+            self.rect.y -= PLAYER_SPEED
         if keys[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
-            self.rect.y += self.speed
+            self.rect.y += PLAYER_SPEED
 
-    def draw(self, surface):
-        pygame.draw.rect(surface, BLUE, self.rect)
+    def draw(self):
+        screen.blit(self.image, self.rect) 
 
 # Enemy 
 class Enemy:
